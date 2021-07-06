@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softeem.dao.TbmoviesMapper">
+
+    <select id="selectAll" resultType="Tbmovies">
+        select * from tbmovies
+    </select>
+
+    <insert id="insert">
+        insert into tbmovies(name,img,director,actor,category,country,publishtime,summary,rank,status)
+        values(
+        #{name},
+        #{img},
+        #{director},
+        #{actor},
+        #{category},
+        #{country},
+        #{publishtime},
+        #{summary},
+        #{rank},
+        #{status})
+    </insert>
+
+    <select id="selectById" resultType="Tbmovies">
+        select * from tbmovies where id=#{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from tbmovies where id=#{id}
+    </delete>
+
+    <!-- mybatis中#{}和${}区别是什么？ -->
+    <delete id="deleteByIds">
+        delete from tbmovies where id in (${ids})
+    </delete>
+
+    <!--    修改影片信息（动态SQL）-->
+    <update id="updateById">
+        update tbmovies
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="img != null">img=#{img},</if>
+            <if test="director != null">director=#{director},</if>
+            <if test="category != null">category=#{category},</if>
+            <if test="country != null">country=#{country},</if>
+            <if test="actor != null">actor=#{actor},</if>
+            <if test="publishtime != null">publishtime=#{publishtime},</if>
+            <if test="rank != null">rank=#{rank},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="summary != null">summary=#{summary},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

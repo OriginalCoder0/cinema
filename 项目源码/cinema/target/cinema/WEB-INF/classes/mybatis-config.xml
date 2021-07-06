@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--    配置jdbc属性文件地址-->
+    <properties resource="jdbc.properties"></properties>
+
+    <!--    类型别名配置-->
+    <typeAliases>
+        <package name="com.softeem.entity"/>
+    </typeAliases>
+
+    <!--    分页插件的拦截器配置-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 配置数据库方言-->
+            <property name="helperDialect" value="mysql"/>
+            <!-- 默认值为 false，当该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）-->
+            <property name="pageSizeZero" value="true"/>
+            <!-- 分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询。-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+    <!--    mybatis运行环境配置：开发环境、生产环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--  事务配置：转账 -->
+            <transactionManager type="JDBC"/>
+            <!--  数据源配置-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--  ORM：对象（java对象）关系（关系型数据库中数据表）映射  配置映射文件-->
+    <mappers>
+        <mapper resource="mappers/TbadminMapper.xml"/>
+        <mapper resource="mappers/TbhallMapper.xml"/>
+        <mapper resource="mappers/TbmoviesMapper.xml"/>
+        <mapper resource="mappers/TborderMapper.xml"/>
+        <mapper resource="mappers/TbscheduleMapper.xml"/>
+        <mapper resource="mappers/TbuserMapper.xml"/>
+    </mappers>
+
+</configuration>
